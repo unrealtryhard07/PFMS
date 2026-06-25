@@ -1,27 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Dark luxury design tokens */
+    --bg: oklch(12% 0.02 250);
+    --surface: oklch(18% 0.02 250);
+    --border-color: oklch(25% 0.02 250);
+    --accent-color: oklch(65% 0.2 255);
+    --success: oklch(68% 0.18 160);
+    --danger: oklch(62% 0.22 25);
+    --warning: oklch(72% 0.18 80);
+    --text-primary: oklch(96% 0 0);
+    --text-muted: oklch(60% 0.02 250);
+    --radius: 0.5rem;
+
+    /* shadcn token overrides — always dark */
+    --background: oklch(12% 0.02 250);
+    --foreground: oklch(96% 0 0);
+    --card: oklch(18% 0.02 250);
+    --card-foreground: oklch(96% 0 0);
+    --popover: oklch(18% 0.02 250);
+    --popover-foreground: oklch(96% 0 0);
+    --primary: oklch(65% 0.2 255);
+    --primary-foreground: oklch(12% 0.02 250);
+    --secondary: oklch(25% 0.02 250);
+    --secondary-foreground: oklch(96% 0 0);
+    --muted: oklch(25% 0.02 250);
+    --muted-foreground: oklch(60% 0.02 250);
+    --accent: oklch(25% 0.02 250);
+    --accent-foreground: oklch(96% 0 0);
+    --destructive: oklch(62% 0.22 25);
+    --destructive-foreground: oklch(96% 0 0);
+    --border: oklch(25% 0.02 250);
+    --input: oklch(25% 0.02 250);
+    --ring: oklch(65% 0.2 255);
   }
-}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  * { box-sizing: border-box; }
+  html { color-scheme: dark; }
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
 }
