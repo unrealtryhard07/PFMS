@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "e2e": "playwright test",
-    "e2e:ui": "playwright test --ui"
+    "e2e:ui": "playwright test --ui",
+    "postbuild": "node -e \"const fs=require('fs');const dst='.next/server/app/(dashboard)/page_client-reference-manifest.js';if(!fs.existsSync(dst)){const src='.next/server/app/(dashboard)/budgets/page_client-reference-manifest.js';let c=fs.readFileSync(src,'utf8');c=c.replace('/(dashboard)/budgets/page','/(dashboard)/page');fs.writeFileSync(dst,c);console.log('patched root page RSC manifest')}\""
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
