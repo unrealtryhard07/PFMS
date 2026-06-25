@@ -36,10 +36,8 @@ export async function updateCategoryBudgetAction(id: string, budget: number | nu
   return { data: null, error: null }
 }
 
-export async function archiveCategoryAction(id: string): Promise<ActionResult> {
+export async function archiveCategoryAction(id: string, _fd: FormData): Promise<void> {
   const supabase = createServerClient()
-  const { error } = await supabase.from('categories').update({ archived_at: new Date().toISOString() }).eq('id', id)
-  if (error) return { data: null, error: error.message }
+  await supabase.from('categories').update({ archived_at: new Date().toISOString() }).eq('id', id)
   revalidatePath('/settings/categories')
-  return { data: null, error: null }
 }

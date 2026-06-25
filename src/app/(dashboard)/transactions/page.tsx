@@ -8,6 +8,7 @@ import { Suspense } from 'react'
 
 const PAGE_SIZE = 50
 
+type TxType = 'income' | 'expense' | 'transfer'
 interface PageProps { searchParams: Promise<{ q?: string; type?: string; account?: string; category?: string; page?: string }> }
 
 export default async function TransactionsPage({ searchParams }: PageProps) {
@@ -26,7 +27,7 @@ export default async function TransactionsPage({ searchParams }: PageProps) {
 
   let query = supabase.from('transactions').select('*', { count: 'exact' }).order('date', { ascending: false }).range(from, to)
   if (sp.q)        query = query.ilike('note', `%${sp.q}%`)
-  if (sp.type)     query = query.eq('type', sp.type)
+  if (sp.type)     query = query.eq('type', sp.type as TxType)
   if (sp.account)  query = query.eq('account_id', sp.account)
   if (sp.category) query = query.eq('category_id', sp.category)
 

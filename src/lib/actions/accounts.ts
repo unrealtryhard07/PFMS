@@ -27,10 +27,8 @@ export async function createAccountAction(formData: FormData): Promise<ActionRes
   return { data: null, error: null }
 }
 
-export async function archiveAccountAction(id: string): Promise<ActionResult> {
+export async function archiveAccountAction(id: string, _fd: FormData): Promise<void> {
   const supabase = createServerClient()
-  const { error } = await supabase.from('accounts').update({ archived_at: new Date().toISOString() }).eq('id', id)
-  if (error) return { data: null, error: error.message }
+  await supabase.from('accounts').update({ archived_at: new Date().toISOString() }).eq('id', id)
   revalidatePath('/settings/accounts')
-  return { data: null, error: null }
 }

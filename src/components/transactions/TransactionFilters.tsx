@@ -17,11 +17,15 @@ export function TransactionFilters({ accounts, categories }: { accounts: Account
     router.push(`${pathname}?${next.toString()}`)
   }
 
+  function selectUpdate(key: string, v: string | null) {
+    update(key, v != null && v !== 'all' ? v : '')
+  }
+
   return (
     <div className="flex flex-wrap gap-3">
       <Input placeholder="Search notes…" defaultValue={params.get('q') ?? ''}
         onChange={(e) => update('q', e.target.value)} className="w-48" />
-      <Select value={params.get('type') ?? 'all'} onValueChange={(v) => update('type', v === 'all' ? '' : v)}>
+      <Select value={params.get('type') ?? 'all'} onValueChange={(v) => selectUpdate('type', v)}>
         <SelectTrigger className="w-36"><SelectValue placeholder="All types" /></SelectTrigger>
         <SelectContent>
           <SelectItem value="all">All types</SelectItem>
@@ -30,7 +34,7 @@ export function TransactionFilters({ accounts, categories }: { accounts: Account
           <SelectItem value="transfer">Transfer</SelectItem>
         </SelectContent>
       </Select>
-      <Select value={params.get('account') ?? 'all'} onValueChange={(v) => update('account', v === 'all' ? '' : v)}>
+      <Select value={params.get('account') ?? 'all'} onValueChange={(v) => selectUpdate('account', v)}>
         <SelectTrigger className="w-40"><SelectValue placeholder="All accounts" /></SelectTrigger>
         <SelectContent>
           <SelectItem value="all">All accounts</SelectItem>
