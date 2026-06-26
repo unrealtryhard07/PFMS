@@ -57,6 +57,7 @@ export async function registerAction(formData: FormData): Promise<ActionResult> 
     return { data: null, error: 'Account created — check your email and click the confirmation link, then log in here.' }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   await (supabase.rpc as any)('seed_default_categories', { p_user_id: data.user.id })
   redirect('/')
 }
