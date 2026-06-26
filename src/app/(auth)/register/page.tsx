@@ -1,5 +1,5 @@
 'use client'
-import { useTransition } from 'react'
+import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import { registerAction } from '@/lib/actions/auth'
 import { Button } from '@/components/ui/button'
@@ -20,10 +20,12 @@ const CURRENCIES = [
 
 export default function RegisterPage() {
   const [isPending, startTransition] = useTransition()
+  const [currency, setCurrency] = useState('KWD')
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const fd = new FormData(e.currentTarget)
+    fd.set('currency', currency)
     startTransition(async () => {
       const result = await registerAction(fd)
       if (result?.error) toast.error(result.error)
@@ -51,7 +53,7 @@ export default function RegisterPage() {
           </div>
           <div className="space-y-2">
             <Label>Default currency</Label>
-            <Select name="currency" defaultValue="KWD">
+            <Select value={currency} onValueChange={(v) => { if (v != null) setCurrency(v) }}>
               <SelectTrigger><SelectValue placeholder="Select currency" /></SelectTrigger>
               <SelectContent>
                 {CURRENCIES.map((c) => (
