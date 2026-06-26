@@ -46,12 +46,18 @@ export async function registerAction(formData: FormData): Promise<ActionResult> 
     password: parsed.data.password,
     options:  { data: { full_name: parsed.data.full_name, currency: parsed.data.currency } },
   })
+
   if (error) return { data: null, error: error.message }
-  if (data.user) {
-    // Will be properly typed after: supabase gen types typescript --linked > src/lib/supabase/types.ts
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (supabase.rpc as any)('seed_default_categories', { p_user_id: data.user.id })
+
+  if (!data.user) {
+    return { data: null, error: 'Sign-up failed. If you already registered, please check your email to confirm your account, then log in.' }
   }
+
+  if (!data.session) {
+    return { data: null, error: 'Account created — check your email and click the confirmation link, then log in here.' }
+  }
+
+  await (supabase.rpc as any)('seed_default_categories', { p_user_id: data.user.id })
   redirect('/')
 }
 
@@ -60,4 +66,3 @@ export async function logoutAction(): Promise<void> {
   await supabase.auth.signOut()
   redirect('/login')
 }
-
